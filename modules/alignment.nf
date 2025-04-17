@@ -12,7 +12,7 @@ process ALIGNMENT {
 	tuple val(MISSING_PROB), val(GAP_FRACTION), val(SEED)
 
 	output:
-	stdout
+	tuple path('*SortedMappedreads.fastq'), path('*SortedUnmappedreads.fastq'), emit: sortedReads
 	
 
 	script:
@@ -65,6 +65,12 @@ process ALIGNMENT {
 		samtools view -b -@ $task.cpus -f 4 "\${sample%.fastq*}Sorted.bam" > "\${sample%.fastq*}SortedUnmappedreads.bam"
 		samtools index "\${sample%.fastq*}SortedUnmappedreads.bam"
 		echo -e "\n[\$(date)] Done!"
+
+		echo -e "\n[\$(date)] Extracting reads from BAM . . . "
+    		samtools fastq -@ $task.cpus "\${sample%.fastq*}SortedMappedreads.bam" > "\${sample%.fastq*}SortedMappedreads.fastq"
+    		samtools fastq -@ $task.cpus "\${sample%.fastq*}SortedUnmappedreads.bam" > "\${sample%.fastq*}SortedUnmappedreads.fastq"
+		echo -e "\n[\$(date)] Done!"
+
 
 		echo -e "\n[\$(date)] Removing temporary files . . . "
 		rm *sam *sai "\${sample%.fastq*}.bam"
