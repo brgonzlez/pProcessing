@@ -83,15 +83,20 @@ workflow {
     }
 
     // Running check
-    
+
     println "\n\033[1;33mCHECKING PARAMETERS\033[0m"
-    println "\n\033[1;Data\033[0m: "
-    println "\n\033[1;33mOutput\033[0m: "
-    println "\n\033[1;33mType\033[0m: "
+    println "\n======================="
+    println "\n\033[1;31mMANDATORY PARAMETERS\033[0m"
+    println "\n\033[1;37mData\033[0m: ${params.data}"
+    println "\n\033[1;37mOutput\033[0m: ${params.output}"
+    println "\n\033[1;37mType\033[0m: ${params.type}"
+    println "\n======================="
     println "\n\033[1;31mADAPTOR REMOVAL\033[0m"
-    println "\n\033[1;33mMin. Length\033[0m: (params.MIN_LENGTH)"
-    println "\n\033[1;33mMin. Quality\033[0m: (params.MIN_QUALITY)"
+    println "\n\033[1;37mMin. Length\033[0m: ${params.MIN_LENGTH}"
+    println "\n\033[1;37mMin. Quality\033[0m: ${params.MIN_QUALITY}"
+    println "\n======================="
     println "\n\033[1;31mALIGNMENT\033[0m"
+
     println "\n\033[1;31mDEDUPLICATION\033[0m"
 
 
