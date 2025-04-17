@@ -1,0 +1,5 @@
+name: dedup
+channels:
+- bioconda
+dependencies:
+- prinseq-plus-plus
