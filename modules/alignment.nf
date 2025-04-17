@@ -17,7 +17,13 @@ process ALIGNMENT {
 
 	script:
 	"""
+
+	
 	for sample in $reads/*; do
+
+	alignment() {
+	file=\$1
+
     		bwa index $panRef
     		name=\$(basename "\$sample")
     		softClip=\$(grep "\$name" $configFile | awk '{print \$2}')
@@ -46,7 +52,9 @@ process ALIGNMENT {
     		samtools sort -o "\${name%.fastq*}_DMC_P.bam" -O bam -@ $threadsGlobal "\${name%.fastq*}_lg.bam"
     		samtools coverage "\${name%.fastq*}_DMC_P.bam" > "\${name}_genomicsMetrics.txt"
     		samtools fastq -@ $threadsGlobal "\${name%.fastq*}_DMC_P.bam" > "\${name%.fastq*}_final.fastq"
-	done
+	}
+	export -f alignment
+	find 
 
 	rm *sam *sai *_lg.bam *_qc.bam *_sorted_mappedreads.bam*
 	cat .command.out >> alignment.log
