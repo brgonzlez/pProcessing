@@ -8,7 +8,7 @@ process ADAPTOR_REMOVAL {
 	conda "${projectDir}/envs/adaptor.yaml"
 
 	input:
-	tuple path(data), path(output), val(type), val(parallel)
+	tuple path(data), val(type), val(parallel)
 	tuple val(MIN_LENGTH), val(MIN_QUALITY)
 
 	output:
