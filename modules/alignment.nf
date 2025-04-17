@@ -42,7 +42,7 @@ process ALIGNMENT {
 
 		echo -e "\n[\$(date)] Converting SAM to BAM and sorting . . ."
 		samtools view -bS "\${sample%.fastq*}.sam" > "\${sample%.fastq*}.bam"
-		echo -e "\n[$(date)] Done!"
+		echo -e "\n[\$(date)] Done!"
 
 
 		echo -e "\n[\$(date)] Checking sanity of BAM file . . ."
@@ -51,7 +51,7 @@ process ALIGNMENT {
 
 		echo -e "\n[\$(date)] Sorting BAM . . ."
 		samtools sort -o "\${sample%.fastq*}Sorted.bam" -O bam -@ $task.cpus "\${sample%.fastq*}.bam"
-		echo -e "\n[$(date)] Done!"
+		echo -e "\n[\$(date)] Done!"
 
 		echo -e "\n[\$(date)] Generating BAM index . . ."
 		samtools index "\${sample%.fastq*}Sorted.bam"
