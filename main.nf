@@ -103,5 +103,5 @@ workflow {
 
 
     // Running the workflow
-    ADAPTOR_REMOVAL(tuple(params.data, params.output, params.type), tuple(params.MIN_LENGTH, params.MIN_QUALITY))
+    ADAPTOR_REMOVAL(tuple(params.data, params.output, params.type, params.parallel), tuple(params.MIN_LENGTH, params.MIN_QUALITY))
 }
