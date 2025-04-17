@@ -22,8 +22,6 @@ process ADAPTOR_REMOVAL {
 	shopt -s nullglob
 
   	# first step: make directory structure
-  	mkdir -p $output/adapters
-  	mkdir -p $output/collapsed
   	mkdir -p adapters
   	mkdir -p collapsed
 
