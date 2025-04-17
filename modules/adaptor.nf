@@ -97,10 +97,10 @@ process ADAPTOR_REMOVAL {
 
   	if [[ $type == PAIRED ]]; then
 	  	export -f findAndRemovePaired
-	  	find $data/ -name "*R1_001.fastq.gz" | parallel -j $parallel findAndRemovePaired  
+	  	find $data/* -name "*R1_001.fastq.gz" | parallel -j $parallel findAndRemovePaired  
   	else
     		export -f findAndRemoveSingle
-    		find $data/ -name "*.fastq.gz" | parallel -j $parallel findAndRemoveSingle
+    		find $data/* -name "*.fastq.gz" | parallel -j $parallel findAndRemoveSingle
   	fi
 	
 	"""
