@@ -53,8 +53,8 @@ process ADAPTOR_REMOVAL {
           	--adapter2 "\$adapter2cat" \
           	--collapse \
           	--minadapteroverlap 1 \
-          	--minlength 25 \
-          	--minquality 25 \
+          	--minlength $MIN_LENGTH \
+          	--minquality $MIN_QUALITY \
           	--gzip \
           	--trimns \
           	--trimqualities \
@@ -83,8 +83,8 @@ process ADAPTOR_REMOVAL {
           	--adapter1 "\$adapter1cat" \
           	--adapter2 "\$adapter2cat" \
         	--minadapteroverlap 1 \
-        	--minlength 25 \
-        	--minquality 25 \
+        	--minlength $MIN_LENGTH \
+        	--minquality $MIN_QUALITY \
         	--gzip \
         	--trimns \
         	--trimqualities \
