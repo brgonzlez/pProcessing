@@ -12,8 +12,7 @@ process ADAPTOR_REMOVAL {
 	tuple val(MIN_LENGTH), val(MIN_QUALITY)
 
 	output:
-	stdout
-	// path 'collapsed/*.gz'
+	path 'collapsed/*.gz', collapsedReads
 
 	script:
 	"""
@@ -88,7 +87,10 @@ process ADAPTOR_REMOVAL {
         	--trimns \
         	--trimqualities \
         	--file1 "\${file}" \
-        	--basename "\${name}"
+        	--basename "\${name}_adapterRemovalOutput"
+
+		mv *"\${name}_adapterRemovalOutput"* adapters/
+		mv adapters/*.truncated.gz collapsed/
 	}
 
 
@@ -101,7 +103,5 @@ process ADAPTOR_REMOVAL {
     		find $data -name "*.fastq.gz" | parallel -j $parallel findAndRemoveSingle
   	fi
 	
-	
-	# publish results
 	"""
 }
