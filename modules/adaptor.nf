@@ -25,23 +25,30 @@ process ADAPTOR_REMOVAL {
   	# first step: make directory structure
   	mkdir -p $output/adapters
   	mkdir -p $output/collapsed
-	
+  	mkdir -p adapters
+  	mkdir -p collapsed
+
+
+
   	# second step: Get adapter sequences and use them.
   	#for file in "$data"/*R1_001.fastq.gz; do
 	
   	findAndRemovePaired() {
   	file=\$1
 	
-        	name=$(basename "${file%1.fastq.gz}")
-        	AdapterRemoval --identify-adapters --file1 "${file}"  --file2 "$data"/"${name}002.fastq.gz" > ../results/adapters/"$name"_Adapters.txt
-          	awk -F':' '/adapter1/ {print $2}' ../results/adapters/"$name"_Adapters.txt > ../results/adapters/"$name"_adapter1.txt
-          	awk -F':' '/adapter2/ {print $2}' ../results/adapters/"$name"_Adapters.txt > ../results/adapters/"$name"_adapter2.txt
-          	adapter1cat=$(cat "$output"/adapters/"$name"_adapter1.txt | tr -d '[:space:]')
-          	adapter2cat=$(cat "$output"/adapters/"$name"_adapter2.txt | tr -d '[:space:]')
+        	name=\$(basename "${file%_R1_001.fastq.gz}")
+        	AdapterRemoval --identify-adapters --file1 "\${file}"  --file2 $data/"\${name}_R2_001.fastq.gz" > adapters/"\$name"_Adapters.txt
+          	awk -F':' '/adapter1/ {print \$2}' adapters/"\$name"_Adapters.txt > adapters/"\$name"_adapter1.txt
+          	awk -F':' '/adapter2/ {print \$2}' adapters/"\$name"_Adapters.txt > adapters/"\$name"_adapter2.txt
+          	adapter1cat=\$(cat adapters/"\$name"_adapter1.txt | tr -d '[:space:]')
+          	adapter2cat=\$(cat adapters/"\$name"_adapter2.txt | tr -d '[:space:]')
+
+		echo -e "For sample \${name} \nAdapter 1: \${adapter1cat} \nAdapter 2: \${adapter2cat}\n"
+
 	  	AdapterRemoval \
-          	--threads 20 \
-          	--adapter1 "$adapter1cat" \
-          	--adapter2 "$adapter2cat" \
+          	--threads $task.cpus \
+          	--adapter1 "\$adapter1cat" \
+          	--adapter2 "\$adapter2cat" \
           	--collapse \
           	--minadapteroverlap 1 \
           	--minlength 25 \
@@ -49,14 +56,14 @@ process ADAPTOR_REMOVAL {
           	--gzip \
           	--trimns \
           	--trimqualities \
-          	--file1 "${file}" \
-          	--file2 ../data/"${name}_2.fastq.gz" \
-          	--basename  "${name}_adapterRemovalOutput"
+          	--file1 $data/"\${file}" \
+          	--file2 $data/"\${name}_2.fastq.gz" \
+          	--basename  "\${name}_adapterRemovalOutput"
   	}
 	
   	if [[ $type == PAIRED ]]; then
 	  	export -f findAndRemovePaired
-	  	find $data -name "*.gb" | parallel -j $task.cpus findAndRemovePaired  
+	  	find $data -name "*R1_001.fastq.gz" | parallel -j $task.cpus findAndRemovePaired  
   	else
     	export -f findAndRemoveSingle
     	find $data -name "*.gb" | parallel -j $task.cpus findAndRemoveSingle
@@ -65,6 +72,8 @@ process ADAPTOR_REMOVAL {
 	
   	# third step: cleaning up
 	
-  	mv *adapterRemovalOutput* ../results/adapters/
-  	mv ../results/adapters/*.collapsed.gz ../results/collapsed/
+  	mv *adapterRemovalOutput* adapters/
+  	mv adapters/*.collapsed.gz collapsed/
+
+	# publish results
 }
