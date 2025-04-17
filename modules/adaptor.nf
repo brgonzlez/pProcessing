@@ -40,10 +40,10 @@ process ADAPTOR_REMOVAL {
 	
         	name=\$(basename "${file%_R1_001.fastq.gz}")
         	AdapterRemoval --identify-adapters --file1 "\${file}"  --file2 $data/"\${name}_R2_001.fastq.gz" > adapters/"\$name"_Adapters.txt
-          	awk -F':' '/adapter1/ {print \$2}' adapters/"\$name"_Adapters.txt > adapters/"\$name"_adapter1.txt
-          	awk -F':' '/adapter2/ {print \$2}' adapters/"\$name"_Adapters.txt > adapters/"\$name"_adapter2.txt
-          	adapter1cat=\$(cat adapters/"\$name"_adapter1.txt | tr -d '[:space:]')
-          	adapter2cat=\$(cat adapters/"\$name"_adapter2.txt | tr -d '[:space:]')
+          	awk -F':' '/adapter1/ {print \$2}' adapters/"\${name}"_Adapters.txt > adapters/"\${name}"_adapter1.txt
+          	awk -F':' '/adapter2/ {print \$2}' adapters/"\${name}"_Adapters.txt > adapters/"\${name}"_adapter2.txt
+          	adapter1cat=\$(cat adapters/"\${name}"_adapter1.txt | tr -d '[:space:]')
+          	adapter2cat=\$(cat adapters/"\${name}"_adapter2.txt | tr -d '[:space:]')
 
 		echo -e "For sample \${name} -> \nAdapter 1: \${adapter1cat} \nAdapter 2: \${adapter2cat}\n"
 
@@ -69,11 +69,19 @@ process ADAPTOR_REMOVAL {
 	findAndRemoveSingle() {
 	file=\$1
 		name=\$(basename "\${file%.fastq.gz}")
-		# FIND ADAPTER FIRST AND THEN USE THEM
+		AdapterRemoval --identify-adapters --file1 "\${file}" > adapters/"\${name}"_Adapters.txt
+		awk -F':' '/adapter1/ {print \$2}' adapters/"\${name}"_Adapters.txt > adapters/"\${name}"_adapter1.txt
+          	awk -F':' '/adapter2/ {print \$2}' adapters/"\${name}"_Adapters.txt > adapters/"\${name}"_adapter2.txt
 
+		adapter1cat=\$(cat adapters/"\${name}"_adapter1.txt | tr -d '[:space:]')
+          	adapter2cat=\$(cat adapters/"\${name}"_adapter2.txt | tr -d '[:space:]')
+
+		echo -e "For sample \${name} -> \nAdapter 1: \${adapter1cat} \nAdapter 2: \${adapter2cat}\n"
 
 		AdapterRemoval \
         	--threads 10 \
+          	--adapter1 "\$adapter1cat" \
+          	--adapter2 "\$adapter2cat" \
         	--minadapteroverlap 1 \
         	--minlength 25 \
         	--minquality 25 \
