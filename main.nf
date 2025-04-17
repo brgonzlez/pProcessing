@@ -27,7 +27,7 @@ Print pipeline metadata: Version and Help
 
 
 def version() {
-        println "aPG version 0.1"
+        println "preProcessing version 1"
         exit 0
 }
 
@@ -39,32 +39,26 @@ def help() {
       	println "\n\033[1;31mSYNOPSIS\033[0m"
 
 	println "\n\033[1;33mUSAGE\033[0m"
-	println "\nnextflow run main.nf --data <PATH> --output <PATH> --index <PATH> [..OPTIONS..]"
+	println "\nnextflow run main.nf --data <PATH> --output <PATH> --type <STRING> [..OPTIONS..]"
 	
 	println "\n\033[1;33mMANDATORY\033[0m"
 	println "  --data <PATH>		Set data file PATH"
 	println "  --output <PATH>		Set output directory PATH"
-	println "  --index <INT>		Set index file PATH"
-	println "  --type <STRING>		Define sequence type: plasmid OR chromosome"
+	println "  --type <STRING>		Define reads type: SINGLE or PAIRED"
 
 
 	println "\n\033[1;33mOPTIONS\033[0m"
-	println "  --threads <INT>		Set number of threads for PGGB (default: 48)"
 	println "  --help			Print help page and exit"
 	println "  --version			Print version and exit"
 
 	
 	println "\n\033[1;31mDESCRIPTION\033[0m"
 	println "\n\033[1;33m--data <PATH>\033[0m"
-	println "Please specify the full PATH of your data. Example: /home/user/mydata/data"
+	println "Please specify the full PATH of your data. Example: /home/user/mydata/data/"
 	
 	println "\n\033[1;33m--output <PATH>\033[0m"
 	println "Please specify the full PATH of your output folder. You need to make the folder first before running the program."
-	
-	println "\n\033[1;33m--index <PATH>\033[0m"
-	println "Please specify the full PATH of your index file. Example: /home/user/index/index.tsv"
-	println "index.tsv file should contain 2 fields separated by tab. First field should have accession number, second field number of sequences to download (or all)"
-	println "\nExample: \n	562	50\n	631	all"
+
         exit 0
 }
 
@@ -76,13 +70,30 @@ if (params.help) {
 // Main workflow
 
 workflow {
+
     // Ensure mandatory parameters are provided
-    if (params.output == "") {
+    if !(params.output) {
         throw new Exception("Output directory must be specified using --output")
     }
-    if (!params.index) {
-        throw new Exception("Index file PATH must be specified --index")
+    if !(params.data) {
+        throw new Exception("Data directory must be specified using --data")
     }
+    if !(params.type) {
+        throw new Exception("Read type must be specified using --type")
+    }
+
+    // Running check
+    
+    println "\n\033[1;33mCHECKING PARAMETERS\033[0m"
+    println "\n\033[1;Data\033[0m: "
+    println "\n\033[1;33mOutput\033[0m: "
+    println "\n\033[1;33mType\033[0m: "
+    println "\n\033[1;31mADAPTOR REMOVAL\033[0m"
+    println "\n\033[1;33mMin. Length\033[0m: (params.MIN_LENGTH)"
+    println "\n\033[1;33mMin. Quality\033[0m: (params.MIN_QUALITY)"
+    println "\n\033[1;31mALIGNMENT\033[0m"
+    println "\n\033[1;31mDEDUPLICATION\033[0m"
+
 
     // Running the workflow
     GET_DATA(params.index, params.type)
