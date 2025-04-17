@@ -12,7 +12,7 @@ process ADAPTOR_REMOVAL {
 	tuple val(MIN_LENGTH), val(MIN_QUALITY)
 
 	output:
-	path 'collapsed/*.gz', collapsedReads
+	path 'collapsed/*.gz', emit: collapsedReads
 
 	script:
 	"""
