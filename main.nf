@@ -103,7 +103,7 @@ workflow {
     println "\n\033[1;37mSeed\033[0m: ${params.SEED}"
 
     // Running the workflow
-    ADAPTOR_REMOVAL(tuple(params.data, params.output, params.type, params.parallel), tuple(params.MIN_LENGTH, params.MIN_QUALITY))
+    ADAPTOR_REMOVAL(tuple(params.data, params.type, params.parallel), tuple(params.MIN_LENGTH, params.MIN_QUALITY))
     ALIGNMENT(ADAPTOR_REMOVAL.out.collapsedReads , params.ref, tuple(params.MISSING_PROB , params.GAP_FRACTION, params.SEED) , params.parallel)
     DEDUPLICATION(ALIGNMENT.out.sortedReads.map { sortedmapped, sortedunmapped -> tuple(mapped , unmapped) }, params.parallel)
 }
