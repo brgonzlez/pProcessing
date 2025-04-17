@@ -104,4 +104,5 @@ process ADAPTOR_REMOVAL {
 	
 	
 	# publish results
+	"""
 }
