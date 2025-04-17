@@ -13,6 +13,7 @@ process ADAPTOR_REMOVAL {
 
 	output:
 	stdout
+	// path 'collapsed/*.gz'
 
 	script:
 	"""
@@ -87,7 +88,7 @@ process ADAPTOR_REMOVAL {
         	--trimns \
         	--trimqualities \
         	--file1 "\${file}" \
-        	--basename "\${name}"> SRR11524780.AdapterRemoval.log
+        	--basename "\${name}"
 	}
 
 
