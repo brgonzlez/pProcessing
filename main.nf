@@ -72,13 +72,13 @@ if (params.help) {
 workflow {
 
     // Ensure mandatory parameters are provided
-    if !(params.output) {
+    if (!params.output) {
         throw new Exception("Output directory must be specified using --output")
     }
-    if !(params.data) {
+    if (!params.data) {
         throw new Exception("Data directory must be specified using --data")
     }
-    if !(params.type) {
+    if (!params.type) {
         throw new Exception("Read type must be specified using --type")
     }
 
