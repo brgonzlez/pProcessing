@@ -102,9 +102,6 @@ workflow {
     println "\n\033[1;37mGap Fraction\033[0m: ${params.GAP_FRACTION}"
     println "\n\033[1;37mSeed\033[0m: ${params.SEED}"
 
-    println "\n\033[1;31mDEDUPLICATION\033[0m"
-
-
     // Running the workflow
     ADAPTOR_REMOVAL(tuple(params.data, params.output, params.type, params.parallel), tuple(params.MIN_LENGTH, params.MIN_QUALITY))
     ALIGNMENT(ADAPTOR_REMOVAL.out.collapsedReads , params.ref, tuple(params.MISSING_PROB , params.GAP_FRACTION, params.SEED) , params.parallel)
