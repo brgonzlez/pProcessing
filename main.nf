@@ -81,7 +81,9 @@ workflow {
     if (!params.type) {
         throw new Exception("Read type must be specified using --type")
     }
-
+    if (!params.ref) {
+        throw new Exception("Indexed human reference genome must be specified using --ref")
+    }
     // Running check
 
     println "\n\033[1;33mCHECKING PARAMETERS\033[0m"
