@@ -30,41 +30,41 @@ process ALIGNMENT {
     		rg_lb="lib1"            # group id
     		rg_pu="unit1"           # not sure what Ill put here
 
-		echo -e "\n[$(date)] Running alignment against reference . . ."
-    		bwa aln -l $SEED -n $MISSING_PROB -o $GAP_FRACTION -t $threadsGlobal $humanReferenceGenome "\${file}" > "\${sample%.fastq*}.sai"
-		echo -e "\n[$(date)] Done!"
+		echo -e "\n[\$(date)] Running alignment against reference . . ."
+    		bwa aln -l $SEED -n $MISSING_PROB -o $GAP_FRACTION -t $task.cpus $humanReferenceGenome "\${file}" > "\${sample%.fastq*}.sai"
+		echo -e "\n[\$(date)] Done!"
 	
-		echo -e "\n[$(date)] Converting SAI to SAM . . ."
+		echo -e "\n[\$(date)] Converting SAI to SAM . . ."
     		bwa samse -r "@RG\\tID:\\$rg_id\\tSM:\\$rg_sm\\tPL:\\$rg_pl\\tLB:\\$rg_lb\\tPU:\\$rg_pu" $humanReferenceGenome "\${sample%.fastq*}.sai" "\${file}" > "${sample%.fastq*}.sam"
+		echo -e "\n[\$(date)] Done!"
+
+
+		echo -e "\n[\$(date)] Converting SAM to BAM and sorting . . ."
+		samtools view -bS "\${sample%.fastq*}.sam" > "\${sample%.fastq*}.bam"
 		echo -e "\n[$(date)] Done!"
 
 
-		echo -e "\n[$(date)] Converting SAM to BAM and sorting . . ."
-		samtools view -bS "${sample%.fastq*}.sam" > "${sample%.fastq*}.bam"
+		echo -e "\n[\$(date)] Checking sanity of BAM file . . ."
+		samtools quickcheck "\${sample%.fastq*}.bam"
+		echo -e "\n[\$(date)] Done!"
+
+		echo -e "\n[\$(date)] Sorting BAM . . ."
+		samtools sort -o "\${sample%.fastq*}Sorted.bam" -O bam -@ $task.cpus "\${sample%.fastq*}.bam"
 		echo -e "\n[$(date)] Done!"
 
+		echo -e "\n[\$(date)] Generating BAM index . . ."
+		samtools index "\${sample%.fastq*}Sorted.bam"
+		echo -e "\n[\$(date)] Done!"
 
-		echo -e "\n[$(date)] Checking sanity of BAM file . . ."
-		samtools quickcheck "${sample%.fastq*}.bam"
-		echo -e "\n[$(date)] Done!"
-
-		echo -e "\n[$(date)] Sorting BAM . . ."
-		samtools sort -o "${sample%.fastq*}Sorted.bam" -O bam -@ "$cores" "${sample%.fastq*}.bam"
-		echo -e "\n[$(date)] Done!"
-
-		echo -e "\n[$(date)] Generating BAM index . . ."
-		samtools index "${sample%.fastq*}Sorted.bam"
-		echo -e "\n[$(date)] Done!"
-
-		echo -e "\n[$(date)] Getting only mapped reads . . . "
+		echo -e "\n[\$(date)] Getting only mapped reads . . . "
 		samtools view -b -@ "$cores" -F 4 "${sample%.fastq*}Sorted.bam" > "${sample%.fastq*}SortedMappedreads.bam"
 		samtools index "${sample%.fastq*}SortedMappedreads.bam"
-		echo -e "\n[$(date)] Done!"
+		echo -e "\n[\$(date)] Done!"
 
-		echo -e "\n[$(date)] Getting only unmapped reads . . . "
-		samtools view -b -@ "$cores" -f 4 "${sample%.fastq*}Sorted.bam" > "${sample%.fastq*}SortedUnmappedreads.bam"
-		samtools index "${sample%.fastq*}SortedUnmappedreads.bam"
-		echo -e "\n[$(date)] All done!"
+		echo -e "\n[\$(date)] Getting only unmapped reads . . . "
+		samtools view -b -@ $task.cpus -f 4 "\${sample%.fastq*}Sorted.bam" > "\${sample%.fastq*}SortedUnmappedreads.bam"
+		samtools index "\${sample%.fastq*}SortedUnmappedreads.bam"
+		echo -e "\n[\$(date)] All done!"
 	}
 
 	export -f alignment
