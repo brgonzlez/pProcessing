@@ -38,7 +38,7 @@ process ADAPTOR_REMOVAL {
   	findAndRemovePaired() {
   	file=\$1
 	
-        	name=\$(basename "${file%_R1_001.fastq.gz}")
+        	name=\$(basename "\${file%_R1_001.fastq.gz}")
         	AdapterRemoval --identify-adapters --file1 "\${file}"  --file2 $data/"\${name}_R2_001.fastq.gz" > adapters/"\$name"_Adapters.txt
           	awk -F':' '/adapter1/ {print \$2}' adapters/"\${name}"_Adapters.txt > adapters/"\${name}"_adapter1.txt
           	awk -F':' '/adapter2/ {print \$2}' adapters/"\${name}"_Adapters.txt > adapters/"\${name}"_adapter2.txt
@@ -99,7 +99,7 @@ process ADAPTOR_REMOVAL {
 	  	find $data -name "*R1_001.fastq.gz" | parallel -j $task.cpus findAndRemovePaired  
   	else
     		export -f findAndRemoveSingle
-    		find $data -name "*.gb" | parallel -j $task.cpus findAndRemoveSingle
+    		find $data -name "*.fastq.gz" | parallel -j $task.cpus findAndRemoveSingle
   	fi
 	
 	
