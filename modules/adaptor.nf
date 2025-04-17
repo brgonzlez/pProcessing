@@ -8,8 +8,8 @@ process ADAPTOR_REMOVAL {
   conda "${projectDir}/envs/adaptor.yaml"
 
 	input:
-	tuple path(data), path(output)
-	path report
+	tuple path(data), path(output), val(type)
+	tuple val(MIN_LENGTH), val(MIN_QUALITY)
 
 	output:
 	stdout
@@ -18,10 +18,9 @@ process ADAPTOR_REMOVAL {
 	"""
   	#!/bin/bash
 
-  	######################################
-  	# Remove adaptors and collapse reads #
-  	######################################
-	
+	# dont crash with empty wildcards
+	shopt -s nullglob
+
   	# first step: make directory structure
   	mkdir -p $output/adapters
   	mkdir -p $output/collapsed
@@ -31,7 +30,10 @@ process ADAPTOR_REMOVAL {
 
 
   	# second step: Get adapter sequences and use them.
-  	#for file in "$data"/*R1_001.fastq.gz; do
+
+	######################
+	# DEFINING FUNCTIONS #
+	######################
 	
   	findAndRemovePaired() {
   	file=\$1
@@ -56,24 +58,26 @@ process ADAPTOR_REMOVAL {
           	--gzip \
           	--trimns \
           	--trimqualities \
-          	--file1 $data/"\${file}" \
+          	--file1 "\${file}" \
           	--file2 $data/"\${name}_2.fastq.gz" \
           	--basename  "\${name}_adapterRemovalOutput"
+
+		mv *"\${name}_adapterRemovalOutput"* adapters/
+		mv adapters/*.collapsed.gz collapsed/
   	}
-	
+
+
+
+
+
   	if [[ $type == PAIRED ]]; then
 	  	export -f findAndRemovePaired
 	  	find $data -name "*R1_001.fastq.gz" | parallel -j $task.cpus findAndRemovePaired  
   	else
-    	export -f findAndRemoveSingle
-    	find $data -name "*.gb" | parallel -j $task.cpus findAndRemoveSingle
+    		export -f findAndRemoveSingle
+    		find $data -name "*.gb" | parallel -j $task.cpus findAndRemoveSingle
   	fi
 	
 	
-  	# third step: cleaning up
-	
-  	mv *adapterRemovalOutput* adapters/
-  	mv adapters/*.collapsed.gz collapsed/
-
 	# publish results
 }
