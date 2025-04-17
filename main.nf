@@ -103,20 +103,4 @@ workflow {
     // Running the workflow
     ADAPTOR_REMOVAL(tuple(params.data, params.output, params.type), tuple(params.MIN_LENGTH, params.MIN_QUALITY))
 
-    PARSE_GENBANK(GET_DATA.out.downloadedFiles.map { fasta, gb, acc, meta -> tuple(fasta, gb) })
-
-    REMOVE_REDUNDANCY(GET_DATA.out.downloadedFiles.map { fasta, gb, acc, meta -> fasta}, PARSE_GENBANK.out.GenBankQCReport)
-
-    FILTER_REDUNDANT(REMOVE_REDUNDANCY.out.clusteredFasta, GET_DATA.out.downloadedFiles.map { fasta, gb, acc, meta -> tuple(fasta, gb, meta)})
-
-    CLUSTERED_INDEX(FILTER_REDUNDANT.out.clusteredSeqsNonRedundant)
-
-    BUILD_GRAPH(FILTER_REDUNDANT.out.clusteredSeqsNonRedundant, CLUSTERED_INDEX.out.indexedClustered, tuple(params.identity , 
-                params.segmentLength , params.nMappings , params.threads , params.poaLength , params.poaParams , params.minMatchLen))
-
-    PATH_DISTANCE(FILTER_REDUNDANT.out.cleanFastaGenBank.map { fasta, gb, metadata -> metadata } , BUILD_GRAPH.out.pathDistance)
-
-    GENE_CLUSTERING(FILTER_REDUNDANT.out.fastaDatabase, params.geneClusterThreshold)
-
-    MAKE_GFF(GENE_CLUSTERING.out.clusteredDatabase, FILTER_REDUNDANT.out.cleanFastaGenBank.map { fasta, gb, metadata -> tuple(fasta, gb)})
-}
+ }
