@@ -36,7 +36,7 @@ process ALIGNMENT {
 		echo -e "\n[\$(date)] Done!"
 	
 		echo -e "\n[\$(date)] Converting SAI to SAM . . ."
-    		bwa samse -r "@RG\\tID:\${rg_id}\\tSM:\${rg_sm}\\tPL:\${rg_pl}\\tLB:\${rg_lb}\\tPU:\${rg_pu}" $humanReferenceGenome "\${sample%.fastq*}.sai" "\${file}" > "${sample%.fastq*}.sam"
+    		bwa samse -r "@RG\\tID:\${rg_id}\\tSM:\${rg_sm}\\tPL:\${rg_pl}\\tLB:\${rg_lb}\\tPU:\${rg_pu}" $humanReferenceGenome "\${sample%.fastq*}.sai" "\${file}" > "\${sample%.fastq*}.sam"
 		echo -e "\n[\$(date)] Done!"
 
 
