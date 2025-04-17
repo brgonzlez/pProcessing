@@ -1,0 +1,5 @@
+name: adapterRemoval
+channels:  
+- bioconda  
+dependencies:  
+- adapterremoval
