@@ -10,6 +10,7 @@ process ALIGNMENT {
 	path collapsedReads
 	path humanReferenceGenome
 	tuple val(MISSING_PROB), val(GAP_FRACTION), val(SEED)
+	val parallel
 
 	output:
 	tuple path('*SortedMappedreads.fastq'), path('*SortedUnmappedreads.fastq'), emit: sortedReads
@@ -79,7 +80,7 @@ process ALIGNMENT {
 	}
 
 	export -f alignment
-	find ./ -name "*collapsed*" | parallel -j $task.cpus alignment 
+	find ./ -name "*collapsed*" | parallel -j $parallel alignment 
 
 	cat .command.out >> alignment.log
 	"""
