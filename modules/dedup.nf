@@ -7,19 +7,39 @@ process DEDUPLICATION {
   conda "${projectDir}/envs/deduplication.yaml"
 
   input:
+  tuple path(mapped), path(unmapped)
+  val parallel
 
   output:
+  tuple path('*unmappedDeduplicated.fastq'), path('*mappedDeDuplicated.fastq')
 
   script:
   """
   #!/bin/bash
 
-  prinseq++ -derep -out_name unMappedReadsdeDuplicated \
-          -fastq /home/shared/GenMed/LabPractical2025/exampleRun/results/alignment/nonHuman/unMappedReadsTest.fastq \
-          > /home/shared/GenMed/LabPractical2025/exampleRun/results/alignment/nonHuman/deDuplicated/unMappedReadsDeDuplicated.log
+  dedupMapped() {
+  file=\$1
 
-  # We need to manually send the output file to the results folder that you can specify
-  mv *_good_out.fastq /home/shared/GenMed/LabPractical2025/exampleRun/results/alignment/nonHuman/deDuplicated/unmappedReadsdeDuplicated.fastq
+  name=\$(basename "\${file}")
+
+  prinseq++ -derep -out_name "\${name}"_unMappedReadsdeDuplicated -fastq "\${file}" >> MappedReadsDeDuplicated.log
   rm *bad_out.fastq
+  mv *_good_out.fastq ./"\${name}"_mappedDeDuplicated.fastq
+  }
+
+  dedupUnmapped() {
+  file=\$1
+
+  name=\$(basename "\${file}")
+  prinseq++ -derep -out_name "\${name}"_MappedReadsdeDuplicated -fastq "\${file}" >> unMappedReadsDeDuplicated.log
+
+  rm *bad_out.fastq
+  mv *_good_out.fastq ./"\${name}"_unmappedDeduplicated.fastq
+  }
+
+  export -f dedupMapped
+  export -f dedupUnmapped
+  find ./ -name '*SortedUnmappedreads.fastq' | parallel -j $parallel dedupUnmapped
+  find ./ -name '*SortedMappedreads.fastq' | parallel -j $parallel dedupMapped
   """
 }
