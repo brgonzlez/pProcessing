@@ -9,7 +9,7 @@ process ALIGNMENT {
 	input:
 	path collapsedReads
 	path humanReferenceGenome
-	tuple val(MISSING_PROB), val(GAP_FRACTION), val(SEED), val(MIN_READ_LENGTH), val(MAX_READ_LENGTH)
+	tuple val(MISSING_PROB), val(GAP_FRACTION), val(SEED)
 
 	output:
 	stdout
