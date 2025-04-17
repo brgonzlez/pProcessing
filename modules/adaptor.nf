@@ -8,7 +8,7 @@ process ADAPTOR_REMOVAL {
 	conda "${projectDir}/envs/adaptor.yaml"
 
 	input:
-	tuple path(data), path(output), val(type)
+	tuple path(data), path(output), val(type), val(parallel)
 	tuple val(MIN_LENGTH), val(MIN_QUALITY)
 
 	output:
@@ -94,10 +94,10 @@ process ADAPTOR_REMOVAL {
 
   	if [[ $type == PAIRED ]]; then
 	  	export -f findAndRemovePaired
-	  	find $data -name "*R1_001.fastq.gz" | parallel -j $task.cpus findAndRemovePaired  
+	  	find $data -name "*R1_001.fastq.gz" | parallel -j $parallel findAndRemovePaired  
   	else
     		export -f findAndRemoveSingle
-    		find $data -name "*.fastq.gz" | parallel -j $task.cpus findAndRemoveSingle
+    		find $data -name "*.fastq.gz" | parallel -j $parallel findAndRemoveSingle
   	fi
 	
 	
