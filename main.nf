@@ -13,15 +13,10 @@ nextflow.enable.dsl=2
 
 // Calling modules
 
-include { GET_DATA } from './modules/entrez.nf'
-include { PARSE_GENBANK } from './modules/genBankQC.nf'
-include { REMOVE_REDUNDANCY } from './modules/clustering.nf'
-include { FILTER_REDUNDANT } from './modules/filterRedundant.nf'
-include { CLUSTERED_INDEX } from './modules/indexClusteredSeqs.nf'
-include { BUILD_GRAPH } from './modules/pangenomeGraph.nf'
-include { PATH_DISTANCE } from './modules/pathDistances.nf'
-include { GENE_CLUSTERING } from './modules/geneClustering.nf'
-include { MAKE_GFF } from './modules/makeGff.nf'
+include { ADAPTOR_REMOVAL } from './modules/adaptor.nf'
+include { ALIGNMENT } from './modules/alignment.nf'
+include { DEDUPLICATION } from './modules/dedup.nf'
+
 
 
 /*
