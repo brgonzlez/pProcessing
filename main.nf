@@ -101,7 +101,7 @@ workflow {
 
 
     // Running the workflow
-    GET_DATA(params.index, params.type)
+    ADAPTOR_REMOVAL(tuple(params.data, params.output, params.type), tuple(params.MIN_LENGTH, params.MIN_QUALITY))
 
     PARSE_GENBANK(GET_DATA.out.downloadedFiles.map { fasta, gb, acc, meta -> tuple(fasta, gb) })
 
