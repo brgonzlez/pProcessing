@@ -7,19 +7,12 @@ process ALIGNMENT {
 	conda "${projectDir}/envs/alignment.yaml"
 
 	input:
-	path reads
-	path panRef, stageAs: 'panGenomeReference.fasta'
-	val threadsGlobal
-	path configFile
-	val missingProb
-	val seedAlignment
-	val gapFraction
-	val minReadLength
-	val maxReadLength
+	path collapsedReads
+	path humanReferenceGenome
+	tuple val(THREADS), val(MISSING_PROB), val(GAP_FRACTION), val(SEED), val(MIN_READ_LENGTH), val(MAX_READ_LENGTH)
 
 	output:
-	path '*_DMC_P.bam', emit: postAlignedBams
-	path '*_final.fastq', emit: postAlignedReads
+	stdout
 	
 
 	script:
