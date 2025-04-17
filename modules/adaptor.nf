@@ -5,7 +5,7 @@
 
 process ADAPTOR_REMOVAL {
 
-  conda "${projectDir}/envs/adaptor.yaml"
+	conda "${projectDir}/envs/adaptor.yaml"
 
 	input:
 	tuple path(data), path(output), val(type)
@@ -45,7 +45,7 @@ process ADAPTOR_REMOVAL {
           	adapter1cat=\$(cat adapters/"\$name"_adapter1.txt | tr -d '[:space:]')
           	adapter2cat=\$(cat adapters/"\$name"_adapter2.txt | tr -d '[:space:]')
 
-		echo -e "For sample \${name} \nAdapter 1: \${adapter1cat} \nAdapter 2: \${adapter2cat}\n"
+		echo -e "For sample \${name} -> \nAdapter 1: \${adapter1cat} \nAdapter 2: \${adapter2cat}\n"
 
 	  	AdapterRemoval \
           	--threads $task.cpus \
@@ -66,7 +66,23 @@ process ADAPTOR_REMOVAL {
 		mv adapters/*.collapsed.gz collapsed/
   	}
 
+	findAndRemoveSingle() {
+	file=\$1
+		name=\$(basename "\${file%.fastq.gz}")
+		# FIND ADAPTER FIRST AND THEN USE THEM
 
+
+		AdapterRemoval \
+        	--threads 10 \
+        	--minadapteroverlap 1 \
+        	--minlength 25 \
+        	--minquality 25 \
+        	--gzip \
+        	--trimns \
+        	--trimqualities \
+        	--file1 "\${file}" \
+        	--basename "\${name}"> SRR11524780.AdapterRemoval.log
+	}
 
 
 
