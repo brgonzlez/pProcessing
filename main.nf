@@ -98,6 +98,9 @@ workflow {
     println "\n\033[1;37mMin. Quality\033[0m: ${params.MIN_QUALITY}"
     println "\n======================="
     println "\n\033[1;31mALIGNMENT\033[0m"
+    println "\n\033[1;37mMissing Prob.\033[0m: ${params. MISSING_PROB}"
+    println "\n\033[1;37mGap Fraction\033[0m: ${params.GAP_FRACTION}"
+    println "\n\033[1;37mSeed\033[0m: ${params.SEED }"
 
     println "\n\033[1;31mDEDUPLICATION\033[0m"
 
