@@ -1,0 +1,6 @@
+name: alignment
+channels:  
+- bioconda  
+dependencies:  
+- bwa
+- samtools=1.19
