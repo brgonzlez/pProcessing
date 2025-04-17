@@ -73,7 +73,7 @@ process ALIGNMENT {
 	}
 
 	export -f alignment
-	find 
+	find ./ -name "*collapsed*" | parallel -j $task.cpus alignment 
 
 	cat .command.out >> alignment.log
 	"""
