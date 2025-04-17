@@ -11,7 +11,7 @@ process DEDUPLICATION {
   val parallel
 
   output:
-  tuple path('*unmappedDeduplicated.fastq'), path('*mappedDeDuplicated.fastq')
+  tuple path('*unmappedDeduplicated.fastq'), path('*mappedDeDuplicated.fastq'), emit: deduplicated
 
   script:
   """
