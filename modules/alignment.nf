@@ -57,20 +57,24 @@ process ALIGNMENT {
 		echo -e "\n[\$(date)] Done!"
 
 		echo -e "\n[\$(date)] Getting only mapped reads . . . "
-		samtools view -b -@ "$cores" -F 4 "${sample%.fastq*}Sorted.bam" > "${sample%.fastq*}SortedMappedreads.bam"
-		samtools index "${sample%.fastq*}SortedMappedreads.bam"
+		samtools view -b -@ $task.cpus -F 4 "\${sample%.fastq*}Sorted.bam" > "\${sample%.fastq*}SortedMappedreads.bam"
+		samtools index "\${sample%.fastq*}SortedMappedreads.bam"
 		echo -e "\n[\$(date)] Done!"
 
 		echo -e "\n[\$(date)] Getting only unmapped reads . . . "
 		samtools view -b -@ $task.cpus -f 4 "\${sample%.fastq*}Sorted.bam" > "\${sample%.fastq*}SortedUnmappedreads.bam"
 		samtools index "\${sample%.fastq*}SortedUnmappedreads.bam"
+		echo -e "\n[\$(date)] Done!"
+
+		echo -e "\n[\$(date)] Removing temporary files . . . "
+		rm *sam *sai *_lg.bam *_qc.bam *_sorted_mappedreads.bam*
 		echo -e "\n[\$(date)] All done!"
+
 	}
 
 	export -f alignment
 	find 
 
-	rm *sam *sai *_lg.bam *_qc.bam *_sorted_mappedreads.bam*
 	cat .command.out >> alignment.log
 	"""
 }
