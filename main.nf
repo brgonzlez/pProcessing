@@ -145,7 +145,7 @@ println '''
     // Running the workflow
     ADAPTOR_REMOVAL(tuple(params.data, params.type, params.parallel), tuple(params.MIN_LENGTH, params.MIN_QUALITY))
     ALIGNMENT(ADAPTOR_REMOVAL.out.collapsedReads , params.ref, tuple(params.MISSING_PROB , params.GAP_FRACTION, params.SEED) , params.parallel)
-    DEDUPLICATION(ALIGNMENT.out.sortedReads.map { sortedmapped, sortedunmapped -> tuple(mapped , unmapped) }, params.parallel)
+    DEDUPLICATION(ALIGNMENT.out.sortedReads.map { sortedmapped, sortedunmapped -> tuple(sortedmapped, sortedunmapped) }, params.parallel)
     PUBLISH(params.output, tuple(ADAPTOR_REMOVAL.out.adaptersLog, ALIGNMENT.out.alignmentLog, DEDUPLICATION.out.dedupLog), 
 	    DEDUPLICATION.out.deduplicated.map { unmapped, mapped -> tuple(unmapped, mapped)})
 }
