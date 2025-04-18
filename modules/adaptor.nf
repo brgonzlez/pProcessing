@@ -57,7 +57,7 @@ process ADAPTOR_REMOVAL {
           	--trimns \
           	--trimqualities \
           	--file1 "\${file}" \
-          	--file2 $data/"\${name}_2.fastq.gz" \
+          	--file2 $data/"\${name}_R2_001.fastq.gz" \
           	--basename  "\${name}_adapterRemovalOutput"
 
 		mv *"\${name}_adapterRemovalOutput"* adapters/
