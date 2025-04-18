@@ -27,7 +27,7 @@ Print pipeline metadata: Version and Help
 
 
 def version() {
-        println "preProcessing version 1"
+        println "preProcessing version 1. Casterly Rock."
         exit 0
 }
 
