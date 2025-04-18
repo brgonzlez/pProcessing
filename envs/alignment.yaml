@@ -1,6 +1,8 @@
 name: alignment
 channels:  
+- conda-forge
 - bioconda  
 dependencies:  
+- libgcc-ng
 - bwa
 - samtools=1.19
