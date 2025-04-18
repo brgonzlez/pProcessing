@@ -1,0 +1,5 @@
+name: publish
+channels:
+- conda-forge
+dependencies:
+- gzip
