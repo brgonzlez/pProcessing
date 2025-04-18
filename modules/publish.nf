@@ -16,10 +16,10 @@ process PUBLISH {
  
  script:
  """
- mkdir -p $output/LOG
- mkdir -p $output/FASTQ
+ mkdir -p ${output}/LOG
+ mkdir -p ${output}/FASTQ
 
- 
-
+ mv *fastq.gz ${output}/FASTQ
+ mv *log ${output}/LOG
  """
 }
