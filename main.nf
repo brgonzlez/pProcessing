@@ -101,6 +101,8 @@ workflow {
     println "\n\033[1;37mMissing Prob.\033[0m: ${params. MISSING_PROB}"
     println "\n\033[1;37mGap Fraction\033[0m: ${params.GAP_FRACTION}"
     println "\n\033[1;37mSeed\033[0m: ${params.SEED}"
+    println "\n=======================\n\n"
+
 
     // Running the workflow
     ADAPTOR_REMOVAL(tuple(params.data, params.type, params.parallel), tuple(params.MIN_LENGTH, params.MIN_QUALITY))
