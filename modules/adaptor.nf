@@ -54,6 +54,7 @@ process ADAPTOR_REMOVAL {
           	--minlength $MIN_LENGTH \
           	--minquality $MIN_QUALITY \
           	--gzip \
+		--threads $task.cpus \
           	--trimns \
           	--trimqualities \
           	--file1 "\${file}" \
@@ -84,6 +85,7 @@ process ADAPTOR_REMOVAL {
         	--minlength $MIN_LENGTH \
         	--minquality $MIN_QUALITY \
         	--gzip \
+		--threads $task.cpus \
         	--trimns \
         	--trimqualities \
         	--file1 "\${file}" \
