@@ -2,19 +2,17 @@
  * PUBLISH{} process will simply send important results to the specified output PATH.
  */
 
- process PUBLISH {
+process PUBLISH {
+ 
+ input:
 
-  input:
-
-
-  output:
-
+ output:
 
 
-  script:
-  """
+ script:
+ """
 
 
 
-  """
- }
+ """
+}
