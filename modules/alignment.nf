@@ -32,51 +32,51 @@ process ALIGNMENT {
     		rg_lb="lib1"            # group id
     		rg_pu="unit1"           # not sure what Ill put here
 
-		echo -e "\n[\$(date)] Running alignment against reference . . ."
+		echo -e "\n[\$(date)] Sample: \$sample , Running alignment against reference . . ."
     		bwa aln -l $SEED -n $MISSING_PROB -o $GAP_FRACTION -t $task.cpus $humanReferenceGenome "\${file}" > "\${sample%.fastq*}.sai"
-		echo -e "\n[\$(date)] Done!"
+		echo -e "\n[\$(date)] Sample: \$sample , Done!"
 	
-		echo -e "\n[\$(date)] Converting SAI to SAM . . ."
+		echo -e "\n[\$(date)] Sample: \$sample , Converting SAI to SAM . . ."
     		bwa samse -r "@RG\\tID:\${rg_id}\\tSM:\${rg_sm}\\tPL:\${rg_pl}\\tLB:\${rg_lb}\\tPU:\${rg_pu}" $humanReferenceGenome "\${sample%.fastq*}.sai" "\${file}" > "\${sample%.fastq*}.sam"
-		echo -e "\n[\$(date)] Done!"
+		echo -e "\n[\$(date)] Sample: \$sample , Done!"
 
 
-		echo -e "\n[\$(date)] Converting SAM to BAM and sorting . . ."
+		echo -e "\n[\$(date)] Sample: \$sample , Converting SAM to BAM and sorting . . ."
 		samtools view -bS "\${sample%.fastq*}.sam" > "\${sample%.fastq*}.bam"
-		echo -e "\n[\$(date)] Done!"
+		echo -e "\n[\$(date)] Sample: \$sample , Done!"
 
 
-		echo -e "\n[\$(date)] Checking sanity of BAM file . . ."
+		echo -e "\n[\$(date)] Sample: \$sample , Checking sanity of BAM file . . ."
 		samtools quickcheck "\${sample%.fastq*}.bam"
-		echo -e "\n[\$(date)] Done!"
+		echo -e "\n[\$(date)] Sample: \$sample , Done!"
 
-		echo -e "\n[\$(date)] Sorting BAM . . ."
+		echo -e "\n[\$(date)] Sample: \$sample , Sorting BAM . . ."
 		samtools sort -o "\${sample%.fastq*}Sorted.bam" -O bam -@ $task.cpus "\${sample%.fastq*}.bam"
-		echo -e "\n[\$(date)] Done!"
+		echo -e "\n[\$(date)] Sample: \$sample , Done!"
 
-		echo -e "\n[\$(date)] Generating BAM index . . ."
+		echo -e "\n[\$(date)] Sample: \$sample , Generating BAM index . . ."
 		samtools index "\${sample%.fastq*}Sorted.bam"
-		echo -e "\n[\$(date)] Done!"
+		echo -e "\n[\$(date)] Sample: \$sample , Done!"
 
-		echo -e "\n[\$(date)] Getting only mapped reads . . . "
+		echo -e "\n[\$(date)] Sample: \$sample , Getting only mapped reads . . . "
 		samtools view -b -@ $task.cpus -F 4 "\${sample%.fastq*}Sorted.bam" > "\${sample%.fastq*}SortedMappedreads.bam"
 		samtools index "\${sample%.fastq*}SortedMappedreads.bam"
-		echo -e "\n[\$(date)] Done!"
+		echo -e "\n[\$(date)] Sample: \$sample , Done!"
 
-		echo -e "\n[\$(date)] Getting only unmapped reads . . . "
+		echo -e "\n[\$(date)] Sample: \$sample , Getting only unmapped reads . . . "
 		samtools view -b -@ $task.cpus -f 4 "\${sample%.fastq*}Sorted.bam" > "\${sample%.fastq*}SortedUnmappedreads.bam"
 		samtools index "\${sample%.fastq*}SortedUnmappedreads.bam"
-		echo -e "\n[\$(date)] Done!"
+		echo -e "\n[\$(date)] Sample: \$sample , Done!"
 
-		echo -e "\n[\$(date)] Extracting reads from BAM . . . "
+		echo -e "\n[\$(date)] Sample: \$sample , Extracting reads from BAM . . . "
     		samtools fastq -@ $task.cpus "\${sample%.fastq*}SortedMappedreads.bam" > "\${sample%.fastq*}SortedMappedreads.fastq"
     		samtools fastq -@ $task.cpus "\${sample%.fastq*}SortedUnmappedreads.bam" > "\${sample%.fastq*}SortedUnmappedreads.fastq"
-		echo -e "\n[\$(date)] Done!"
+		echo -e "\n[\$(date)] Sample: \$sample , Done!"
 
 
-		echo -e "\n[\$(date)] Removing temporary files . . . "
+		echo -e "\n[\$(date)] Sample: \$sample , Removing temporary files . . . "
 		rm *sam *sai "\${sample%.fastq*}.bam"
-		echo -e "\n[\$(date)] All done!"
+		echo -e "\n[\$(date)] Sample: \$sample , All done!"
 
 	}
 
