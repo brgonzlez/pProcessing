@@ -16,7 +16,7 @@ nextflow.enable.dsl=2
 include { ADAPTOR_REMOVAL } from './modules/adaptor.nf'
 include { ALIGNMENT } from './modules/alignment.nf'
 include { DEDUPLICATION } from './modules/dedup.nf'
-
+include { PUBLISH } from './modules/publish.nf'
 
 
 /*
@@ -108,4 +108,6 @@ workflow {
     ADAPTOR_REMOVAL(tuple(params.data, params.type, params.parallel), tuple(params.MIN_LENGTH, params.MIN_QUALITY))
     ALIGNMENT(ADAPTOR_REMOVAL.out.collapsedReads , params.ref, tuple(params.MISSING_PROB , params.GAP_FRACTION, params.SEED) , params.parallel)
     DEDUPLICATION(ALIGNMENT.out.sortedReads.map { sortedmapped, sortedunmapped -> tuple(mapped , unmapped) }, params.parallel)
+    PUBLISH(params.output, tuple(ADAPTOR_REMOVAL.out.adaptersLog, ALIGNMENT.out.alignmentLog, DEDUPLICATION.out.dedupLog), 
+	    DEDUPLICATION.out.deduplicated.map { unmapped, mapped -> tuple(unmapped, mapped)})
 }
