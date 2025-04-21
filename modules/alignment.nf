@@ -4,7 +4,6 @@
 
 
 process ALIGNMENT {
-	debug true
 	conda "${projectDir}/envs/alignment.yaml"
 
 	input:
