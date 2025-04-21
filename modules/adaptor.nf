@@ -14,6 +14,7 @@ process ADAPTOR_REMOVAL {
 	output:
 	path 'collapsed/*.gz', emit: collapsedReads
 	path '*_Adapters.txt', emit: adapters
+	path 'adapters.log', emit: adaptersLog
 
 	script:
 	"""
@@ -105,6 +106,7 @@ process ADAPTOR_REMOVAL {
     		export -f findAndRemoveSingle
     		find $data/* -name "*.fastq.gz" | parallel -j $parallel findAndRemoveSingle
   	fi
-	
+
+	cat .command.log > adapters.log
 	"""
 }
