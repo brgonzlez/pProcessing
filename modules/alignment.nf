@@ -15,7 +15,7 @@ process ALIGNMENT {
 
 	output:
 	tuple path('*SortedMappedreads.fastq'), path('*SortedUnmappedreads.fastq'), emit: sortedReads
-	
+	path 'alignment.log', emit: alignmentLog
 
 	script:
 	"""
@@ -83,6 +83,6 @@ process ALIGNMENT {
 	export -f alignment
 	find ./ -name "*collapsed*" | parallel -j $parallel alignment 
 
-	cat .command.out >> alignment.log
+	cat .command.log >> alignment.log
 	"""
 }
