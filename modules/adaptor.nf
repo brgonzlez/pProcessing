@@ -13,7 +13,7 @@ process ADAPTOR_REMOVAL {
 
 	output:
 	path 'collapsed/*.gz', emit: collapsedReads
-	path '*_Adapters.txt', emit: adapters
+	path 'adapters/*_Adapters.txt', emit: adapters
 	path 'adapters.log', emit: adaptersLog
 
 	script:
