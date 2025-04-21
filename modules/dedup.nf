@@ -12,6 +12,7 @@ process DEDUPLICATION {
 
   output:
   tuple path('*unmappedDeduplicated.fastq'), path('*mappedDeDuplicated.fastq'), emit: deduplicated
+  path 'dedup.log', emit: dedupLog
 
   script:
   """
@@ -41,5 +42,7 @@ process DEDUPLICATION {
   export -f dedupUnmapped
   find ./ -name '*SortedUnmappedreads.fastq' | parallel -j $parallel dedupUnmapped
   find ./ -name '*SortedMappedreads.fastq' | parallel -j $parallel dedupMapped
+
+  cat .command.log > dedup.log
   """
 }
