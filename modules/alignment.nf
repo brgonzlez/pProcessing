@@ -23,7 +23,7 @@ process ALIGNMENT {
 	alignment() {
 	file=\$1
 
-    		sample=\$(basename "\$file")
+    		sample=\$(basename "\${file%_adapterRemovalOutput.fastq.gz}.fastq.gz")
        		# Making read groups
     		rg_id="\${sample%.fastq*}"  # sample name as id
     		rg_sm="\${sample%.fastq*}" # sample name again
