@@ -63,8 +63,9 @@ process ADAPTOR_REMOVAL {
           	--file2 $data/"\${name}_R2_001.fastq.gz" \
           	--basename  "\${name}_adapterRemovalOutput"
 
+		
 		mv *"\${name}_adapterRemovalOutput"* adapters/
-		mv adapters/*.collapsed.gz collapsed/
+		mv adapters/*.collapsed.gz collapsed/"\${name}_adapterRemovalOutput.fastq.gz"
   	}
 
 	findAndRemoveSingle() {
@@ -94,7 +95,7 @@ process ADAPTOR_REMOVAL {
         	--basename "\${name}_adapterRemovalOutput"
 
 		mv *"\${name}_adapterRemovalOutput"* adapters/
-		mv adapters/*.truncated.gz collapsed/
+		mv adapters/*.truncated.gz collapsed/"\${name}_adapterRemovalOutput.fastq.gz"
 	}
 
 
