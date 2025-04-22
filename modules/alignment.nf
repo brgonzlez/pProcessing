@@ -80,7 +80,7 @@ process ALIGNMENT {
 	}
 
 	export -f alignment
-	find ./ -name "*collapsed*" | parallel -j $parallel alignment 
+	find ./ -name "*_adapterRemovalOutput.fastq.gz" | parallel -j $parallel alignment 
 
 	cat .command.log >> alignment.log
 	"""
