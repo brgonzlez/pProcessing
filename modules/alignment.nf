@@ -20,6 +20,8 @@ process ALIGNMENT {
 	"""
 	#!/bin/bash
 
+	bwa index $humanReferenceGenome/*
+
 	alignment() {
 	file=\$1
 
