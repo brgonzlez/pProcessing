@@ -76,7 +76,6 @@ process ALIGNMENT {
 
 
 		echo -e "\n[\$(date)] Sample: \$sample , Removing temporary files . . . "
-		rm *sam *sai "\${sample%.fastq*}.bam"
 		echo -e "\n[\$(date)] Sample: \$sample , All done!"
 
 	}
