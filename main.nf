@@ -40,18 +40,35 @@ def help() {
 
 	println "\n\033[1;33mUSAGE\033[0m"
 	println "\nnextflow run main.nf --data <PATH> --output <PATH> --type <STRING> [..OPTIONS..]"
-	
+
+	println "\n====================================================================="
+
 	println "\n\033[1;33mMANDATORY\033[0m"
 	println "  --data <PATH>		Set data file PATH"
 	println "  --output <PATH>		Set output directory PATH"
 	println "  --type <STRING>		Define reads type: SINGLE or PAIRED"
 
+	println "\n====================================================================="
 
-	println "\n\033[1;33mOPTIONS\033[0m"
+	println "\n\033[1;33mBASIC OPTIONS\033[0m"
 	println "  --help			Print help page and exit"
 	println "  --version			Print version and exit"
 
-	
+	println "\n====================================================================="
+
+	println "\n\033[1;33mSPECIFIC OPTIONS\033[0m"
+
+	println "\n\033[1;32m[ADAPTOR_REMOVAL]\033[0m"
+	println "\n\033[1;33m--MIN_LENGTH <INT> (Default: 25)\033[0m"
+	println "\n\033[1;33m--MIN_QUALITY <INT> (Default: 25)\033[0m"
+
+	println "\n\033[1;32m[ALIGNMENT]\033[0m"
+	println "\n\033[1;33m--MISSING_PROB <INT> (Default: 0.01)\033[0m"
+	println "\n\033[1;33m--GAP_FRACTION <INT> (Default: 2)\033[0m"
+	println "\n\033[1;33m--SEED <INT> (Default: 16500)\033[0m"
+
+	println "\n====================================================================="
+
 	println "\n\033[1;31mDESCRIPTION\033[0m"
 	println "\n\033[1;33m--data <PATH>\033[0m"
 	println "Please specify the full PATH of your data. Example: /home/user/mydata/data/"
