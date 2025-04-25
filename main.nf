@@ -101,24 +101,6 @@ workflow {
     if (!params.ref) {
         throw new Exception("Indexed human reference genome must be specified using --ref")
     }
-    // Running check
-
-    println "\n\033[1;33mCHECKING PARAMETERS\033[0m"
-    println "\n======================="
-    println "\n\033[1;31mMANDATORY PARAMETERS\033[0m"
-    println "\n\033[1;37mData\033[0m: ${params.data}"
-    println "\n\033[1;37mOutput\033[0m: ${params.output}"
-    println "\n\033[1;37mType\033[0m: ${params.type}"
-    println "\n======================="
-    println "\n\033[1;31mADAPTOR REMOVAL\033[0m"
-    println "\n\033[1;37mMin. Length\033[0m: ${params.MIN_LENGTH}"
-    println "\n\033[1;37mMin. Quality\033[0m: ${params.MIN_QUALITY}"
-    println "\n======================="
-    println "\n\033[1;31mALIGNMENT\033[0m"
-    println "\n\033[1;37mMissing Prob.\033[0m: ${params. MISSING_PROB}"
-    println "\n\033[1;37mGap Fraction\033[0m: ${params.GAP_FRACTION}"
-    println "\n\033[1;37mSeed\033[0m: ${params.SEED}"
-    println "\n=======================\n\n"
 
 println '''
                           .
@@ -156,6 +138,27 @@ println '''
       /  __/ )___   > \\\\_ ) \\\\  \\\\_ "  ).==_____==( <."/ (_<  \\\\)|
      lc_/>.=__.._\\\\"__\\\\_  >_)___\\\\-_/.=________=/___/.__>__"(__/
 '''
+
+    // Running check
+
+    println "\n\033[1;33mCHECKING PARAMETERS\033[0m"
+    println "\n======================="
+    println "\n\033[1;31mMANDATORY PARAMETERS\033[0m"
+    println "\n\033[1;37mData\033[0m: ${params.data}"
+    println "\n\033[1;37mOutput\033[0m: ${params.output}"
+    println "\n\033[1;37mType\033[0m: ${params.type}"
+    println "\n======================="
+    println "\n\033[1;31mADAPTOR REMOVAL\033[0m"
+    println "\n\033[1;37mMin. Length\033[0m: ${params.MIN_LENGTH}"
+    println "\n\033[1;37mMin. Quality\033[0m: ${params.MIN_QUALITY}"
+    println "\n======================="
+    println "\n\033[1;31mALIGNMENT\033[0m"
+    println "\n\033[1;37mMissing Prob.\033[0m: ${params. MISSING_PROB}"
+    println "\n\033[1;37mGap Fraction\033[0m: ${params.GAP_FRACTION}"
+    println "\n\033[1;37mSeed\033[0m: ${params.SEED}"
+    println "\n=======================\n\n"
+
+
 
     // Running the workflow
     ADAPTOR_REMOVAL(tuple(params.data, params.type, params.parallel), tuple(params.MIN_LENGTH, params.MIN_QUALITY))
