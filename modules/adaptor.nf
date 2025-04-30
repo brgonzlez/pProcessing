@@ -5,6 +5,10 @@
 
 process ADAPTOR_REMOVAL {
 
+	publishDir "${params.output}/LOG",
+             mode: 'copy',
+             pattern: 'adapters.log'
+
 	conda "${projectDir}/envs/adaptor.yaml"
 
 	input:
