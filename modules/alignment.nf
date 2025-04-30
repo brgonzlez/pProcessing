@@ -4,6 +4,11 @@
 
 
 process ALIGNMENT {
+
+   publishDir "${params.output}/LOG",
+             mode: 'copy',
+             pattern: 'alignment.log'
+
 	conda "${projectDir}/envs/alignment.yaml"
 
 	input:
