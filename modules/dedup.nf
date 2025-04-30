@@ -4,7 +4,7 @@
 
 process DEDUPLICATION {
 
-	publishDir "${params.output}/LOG",
+	publishDir "${params.output}/FASTQ",
              mode: 'copy',
              pattern: '*ReadsdeDuplicated.fastq'
 
