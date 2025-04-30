@@ -24,6 +24,8 @@ process ADAPTOR_REMOVAL {
 	"""
   	#!/bin/bash
 
+	mkdir -p "${params.output}/LOG
+	mkdir -p "${params.output}/FASTQ
 	# dont crash with empty wildcards
 	shopt -s nullglob
 
