@@ -47,6 +47,6 @@ process DEDUPLICATION {
   done
   
 
-  cat .command.log > dedup.log
+  cat *.log > dedup.log
   """
 }
