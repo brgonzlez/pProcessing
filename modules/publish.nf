@@ -6,7 +6,7 @@ process PUBLISH {
  
  input:
  path output
- tuple path(adaptersLog), path(alignmentLog), path(dedupLog)
+ tuple val(adaptersLog), val(alignmentLog), val(dedupLog)
  tuple path(unmappedFastq), path(mappedFastq)
  
 
