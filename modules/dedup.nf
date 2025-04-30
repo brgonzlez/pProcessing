@@ -21,18 +21,18 @@ process DEDUPLICATION {
   dedupMapped() {
   file=\$1
 
-  name=\$(basename "\${file}")
+  name=\$(basename "\${file%.fastq}")
 
-  prinseq++ -derep -out_name "\${name}"_unMappedReadsdeDuplicated -fastq "\${file}" >> MappedReadsDeDuplicated.log
+  prinseq++ -derep -out_name "\${name}"_MappedReadsdeDuplicated -fastq "\${file}" >> MappedReadsDeDuplicated.log
   rm *bad_out.fastq
-  mv *_good_out.fastq ./"\${name}"_mappedDeDuplicated.fastq
+  mv *_good_out.fastq ./"\${name}"_mappDeDuplicated.fastq
   }
 
   dedupUnmapped() {
   file=\$1
 
-  name=\$(basename "\${file}")
-  prinseq++ -derep -out_name "\${name}"_MappedReadsdeDuplicated -fastq "\${file}" >> unMappedReadsDeDuplicated.log
+  name=\$(basename "\${file%.fastq}")
+  prinseq++ -derep -out_name "\${name}"_unMappedReadsdeDuplicated -fastq "\${file}" >> unMappedReadsDeDuplicated.log
 
   rm *bad_out.fastq
   mv *_good_out.fastq ./"\${name}"_unmappedDeduplicated.fastq
