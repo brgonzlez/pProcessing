@@ -5,7 +5,7 @@
 
 process ALIGNMENT {
 
-   publishDir "${params.output}/LOG",
+	publishDir "${params.output}/LOG",
              mode: 'copy',
              pattern: 'alignment.log'
 
