@@ -24,8 +24,6 @@ process DEDUPLICATION {
   name=\$(basename "\${file%.fastq}")
 
   prinseq++ -derep -out_name "\${name}"_MappedReadsdeDuplicated -fastq "\${file}" >> MappedReadsDeDuplicated.log
-  rm *bad_out.fastq
-  mv *_good_out.fastq ./"\${name}"_mappDeDuplicated.fastq
   }
 
   dedupUnmapped() {
@@ -34,14 +32,20 @@ process DEDUPLICATION {
   name=\$(basename "\${file%.fastq}")
   prinseq++ -derep -out_name "\${name}"_unMappedReadsdeDuplicated -fastq "\${file}" >> unMappedReadsDeDuplicated.log
 
-  rm *bad_out.fastq
-  mv *_good_out.fastq ./"\${name}"_unmappedDeduplicated.fastq
   }
 
   export -f dedupMapped
   export -f dedupUnmapped
   find ./ -name '*SortedUnmappedreads.fastq' | parallel -j $parallel dedupUnmapped
   find ./ -name '*SortedMappedreads.fastq' | parallel -j $parallel dedupMapped
+
+  rm *bad_out.fastq
+
+  for sample in *_good_out.fastq; do
+    name=\$(basename "\${sample%_good_out.fastq}.fastq")
+    mv "\$sample" "\${name}"
+  done
+  
 
   cat .command.log > dedup.log
   """
