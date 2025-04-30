@@ -4,6 +4,10 @@
 
 process DEDUPLICATION {
 
+   publishDir "${params.output}/FASTQ",
+             mode: 'copy',
+             pattern: '*ReadsdeDuplicated.fastq'
+
   conda "${projectDir}/envs/deduplication.yaml"
 
   input:
