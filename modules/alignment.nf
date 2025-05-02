@@ -1,5 +1,5 @@
 /*
- * ALIGNMENT{} process will aligned the data against human reference genome and output mapped and aligned reads in separate files.
+ * ALIGNMENT{} process will aligned the data against human reference genome and output mapped and unmapped reads in separate files.
  */
 
 
