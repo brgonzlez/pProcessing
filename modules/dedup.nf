@@ -1,5 +1,5 @@
 /* 
- * DEDUPLICATION{} process will take aligned data and perform read deduplication.
+ * DEDUPLICATION{} process will take aligned data and perform read deduplication. It will publish processed fastq to --output
  */
 
 process DEDUPLICATION {
