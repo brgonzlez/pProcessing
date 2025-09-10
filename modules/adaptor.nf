@@ -62,7 +62,6 @@ process ADAPTOR_REMOVAL {
           	--minlength $MIN_LENGTH \
           	--minquality $MIN_QUALITY \
           	--gzip \
-		--threads $task.cpus \
           	--trimns \
           	--trimqualities \
           	--file1 "\${file}" \
@@ -87,7 +86,6 @@ process ADAPTOR_REMOVAL {
 		echo -e "For sample \${name} -> \nAdapter 1: \${adapter1cat} \nAdapter 2: \${adapter2cat}\n"
 
 		AdapterRemoval \
-        	--threads 10 \
           	--adapter1 "\$adapter1cat" \
           	--adapter2 "\$adapter2cat" \
         	--minadapteroverlap 1 \
