@@ -4,14 +4,6 @@
 
 process DEDUPLICATION {
 
-	publishDir "${params.output}/FASTQ",
-             mode: 'copy',
-             pattern: '*ReadsdeDuplicated.fastq'
-
-   publishDir "${params.output}/LOG",
-             mode: 'copy',
-             pattern: 'dedup.log'
-
   conda "${projectDir}/envs/deduplication.yaml"
 
   input:
@@ -53,7 +45,9 @@ process DEDUPLICATION {
     name=\$(basename "\${sample%_good_out.fastq}.fastq")
     mv "\$sample" "\${name}"
   done
-  
+
+	mkdir -p ${params.output}/FASTQ
+	cp *fastq ${params.output}/FASTQ
 
   cat *.log > dedup.log
   """
