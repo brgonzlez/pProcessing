@@ -160,7 +160,7 @@ println '''
 
 
     // Running the workflow
-    ADAPTOR_REMOVAL(tuple(params.data, params.type, params.parallel), tuple(params.MIN_LENGTH, params.MIN_QUALITY))
-    ALIGNMENT(ADAPTOR_REMOVAL.out.collapsedReads , params.ref, tuple(params.MISSING_PROB , params.GAP_FRACTION, params.SEED) , params.parallel)
+    ADAPTOR_REMOVAL(tuple(params.data, params.type, params.parallel), tuple(params.min_length, params.min_quality))
+    ALIGNMENT(ADAPTOR_REMOVAL.out.collapsedReads , params.ref, tuple(params.missing_prob , params.gap_fraction, params.seed) , params.parallel)
     DEDUPLICATION(ALIGNMENT.out.sortedReads.map { sortedmapped, sortedunmapped -> tuple(sortedmapped, sortedunmapped) }, params.parallel)
 }
