@@ -148,13 +148,13 @@ println '''
     println "\n\033[1;37mType\033[0m: ${params.type}"
     println "\n======================="
     println "\n\033[1;31mADAPTOR REMOVAL\033[0m"
-    println "\n\033[1;37mMin. Length\033[0m: ${params.MIN_LENGTH}"
-    println "\n\033[1;37mMin. Quality\033[0m: ${params.MIN_QUALITY}"
+    println "\n\033[1;37mMin. Length\033[0m: ${params.min_length}"
+    println "\n\033[1;37mMin. Quality\033[0m: ${params.min_quality}"
     println "\n======================="
     println "\n\033[1;31mALIGNMENT\033[0m"
-    println "\n\033[1;37mMissing Prob.\033[0m: ${params. MISSING_PROB}"
-    println "\n\033[1;37mGap Fraction\033[0m: ${params.GAP_FRACTION}"
-    println "\n\033[1;37mSeed\033[0m: ${params.SEED}"
+    println "\n\033[1;37mMissing Prob.\033[0m: ${params.missing_prob}"
+    println "\n\033[1;37mGap Fraction\033[0m: ${params.gap_fraction}"
+    println "\n\033[1;37mSeed\033[0m: ${params.seed}"
     println "\n=======================\n\n"
 
 
