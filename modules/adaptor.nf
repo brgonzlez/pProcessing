@@ -13,7 +13,7 @@ process ADAPTOR_REMOVAL {
 
 	input:
 	tuple path(data), val(type), val(parallel)
-	tuple val(MIN_LENGTH), val(MIN_QUALITY)
+	tuple val(min_len), val(min_qual)
 
 	output:
 	path 'collapsed/*.gz', emit: collapsedReads
@@ -59,8 +59,8 @@ process ADAPTOR_REMOVAL {
           	--adapter2 "\$adapter2cat" \
           	--collapse \
           	--minadapteroverlap 1 \
-          	--minlength $MIN_LENGTH \
-          	--minquality $MIN_QUALITY \
+          	--minlength $min_len \
+          	--minquality $min_qual \
           	--gzip \
           	--trimns \
           	--trimqualities \
@@ -89,8 +89,8 @@ process ADAPTOR_REMOVAL {
           	--adapter1 "\$adapter1cat" \
           	--adapter2 "\$adapter2cat" \
         	--minadapteroverlap 1 \
-        	--minlength $MIN_LENGTH \
-        	--minquality $MIN_QUALITY \
+        	--minlength $min_len \
+        	--minquality $min_qual \
         	--gzip \
 		--threads $task.cpus \
         	--trimns \
