@@ -5,16 +5,12 @@
 
 process ALIGNMENT {
 
-	publishDir "${params.output}/LOG",
-             mode: 'copy',
-             pattern: 'alignment.log'
-
 	conda "${projectDir}/envs/alignment.yaml"
 
 	input:
 	path collapsedReads
 	path humanReferenceGenome
-	tuple val(MISSING_PROB), val(GAP_FRACTION), val(SEED)
+	tuple val(missing), val(gap), val(seed)
 	val parallel
 
 	output:
@@ -39,7 +35,7 @@ process ALIGNMENT {
     		rg_pu="unit1"           # not sure what Ill put here
 
 		echo -e "\n[\$(date)] Sample: \$sample , Running alignment against reference . . ."
-    		bwa aln -l $SEED -n $MISSING_PROB -o $GAP_FRACTION -t $task.cpus $humanReferenceGenome/* "\${file}" > "\${sample%.fastq*}.sai"
+    		bwa aln -l $seed -n $missing -o $gap -t $task.cpus $humanReferenceGenome/* "\${file}" > "\${sample%.fastq*}.sai"
 		echo -e "\n[\$(date)] Sample: \$sample , Done!"
 	
 		echo -e "\n[\$(date)] Sample: \$sample , Converting SAI to SAM . . ."
