@@ -39,7 +39,7 @@ process ALIGNMENT {
 		echo -e "\n[\$(date)] Sample: \$sample , Done!"
 	
 		echo -e "\n[\$(date)] Sample: \$sample , Converting SAI to SAM . . ."
-    		bwa samse -r "@RG\\tID:\${rg_id}\\tSM:\${rg_sm}\\tPL:\${rg_pl}\\tLB:\${rg_lb}\\tPU:\${rg_pu}" $humanReferenceGenome/* "\${sample%.fastq*}.sai" "\${file}" > "\${sample%.fastq*}.sam"
+    		bwa samse -r "@RG\\tID:\${rg_id}\\tSM:\${rg_sm}\\tPL:\${rg_pl}\\tLB:\${rg_lb}\\tPU:\${rg_pu}" $humanReferenceGenome/*fa "\${sample%.fastq*}.sai" "\${file}" > "\${sample%.fastq*}.sam"
 		echo -e "\n[\$(date)] Sample: \$sample , Done!"
 
 
@@ -71,8 +71,8 @@ process ALIGNMENT {
 		echo -e "\n[\$(date)] Sample: \$sample , Done!"
 
 		echo -e "\n[\$(date)] Sample: \$sample , Extracting reads from BAM . . . "
-    		samtools fastq -@ $task.cpus "\${sample%.fastq*}SortedMappedreads.bam" > "\${sample%.fastq*}SortedMappedreads.fastq"
-    		samtools fastq -@ $task.cpus "\${sample%.fastq*}SortedUnmappedreads.bam" > "\${sample%.fastq*}SortedUnmappedreads.fastq"
+    	samtools fastq -@ $task.cpus "\${sample%.fastq*}SortedMappedreads.bam" > "\${sample%.fastq*}SortedMappedreads.fastq"
+    	samtools fastq -@ $task.cpus "\${sample%.fastq*}SortedUnmappedreads.bam" > "\${sample%.fastq*}SortedUnmappedreads.fastq"
 		echo -e "\n[\$(date)] Sample: \$sample , Done!"
 
 
