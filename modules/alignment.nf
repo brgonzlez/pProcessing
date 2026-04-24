@@ -85,5 +85,7 @@ process ALIGNMENT {
 	find ./ -name "*_adapterRemovalOutput.fastq.gz" | parallel -j $parallel alignment 
 
 	cat .command.log >> alignment.log
+
+	cp alignment.log "${params.output}/LOG/"
 	"""
 }
