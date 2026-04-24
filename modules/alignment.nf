@@ -86,6 +86,6 @@ process ALIGNMENT {
 
 	cat .command.log >> alignment.log
 
-	cp alignment.log "${params.output}/LOG/"
+	cp alignment.log ${params.output}/LOG/
 	"""
 }
