@@ -42,16 +42,17 @@ def help() {
 
 	println "\n====================================================================="
 
-	println "\n\033[1;33mMANDATORY\033[0m"
-	println "  --data <PATH>		Set data file PATH"
-	println "  --output <PATH>		Set output directory PATH"
-	println "  --type <STRING>		Define reads type: SINGLE or PAIRED"
+    println "\n\033[1;33mMANDATORY\033[0m"
+    println "  --data       <PATH> set data file PATH"
+    println "  --output     <PATH> set output directory PATH"
+    println "  --type     <STRING> define reads type: SINGLE or PAIRED"
+    println "  --ref        <PATH> set human reference genome PATH"
 
 	println "\n====================================================================="
 
 	println "\n\033[1;33mBASIC OPTIONS\033[0m"
-	println "  --help			Print help page and exit"
-	println "  --version			Print version and exit"
+	println "  --help              print help page and exit"
+	println "  --version           print version and exit"
 
 	println "\n====================================================================="
 
