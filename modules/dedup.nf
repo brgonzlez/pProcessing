@@ -52,7 +52,7 @@ process DEDUPLICATION {
 
 	cat *.log > dedup.log
 		
-	cp *fastq.gz "${params.output}/FASTQ/"
-	cp dedup.log "${params.output}/LOG/"
+	cp *fastq.gz ${params.output}/FASTQ/
+	cp dedup.log ${params.output}/LOG/
 	"""
 }
