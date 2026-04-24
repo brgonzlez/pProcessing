@@ -1,13 +1,10 @@
 /*
- * ADAPTOR_REMOVAL{} process will take either single or paired-end reads and do two tasks: Find adapter sequences and remove them from the fasta.gz files. Format accepted for paired end reads is R{1-2}_001.fastq.gz. May change.
+ * ADAPTOR_REMOVAL{} process will take either single or paired-end reads and do two tasks: Find adapter sequences and remove them from the fasta.gz files. Format accepted for paired end reads 
+ * is *_1.fastq.gz and *_2.fastq.gz.
  */
 
 
 process ADAPTOR_REMOVAL {
-
-	publishDir "${params.output}/LOG",
-             mode: 'copy',
-             pattern: 'adapters.log'
 
 	conda "${projectDir}/envs/adaptor.yaml"
 
@@ -44,8 +41,8 @@ process ADAPTOR_REMOVAL {
   	findAndRemovePaired() {
   	file=\$1
 	
-        	name=\$(basename "\${file%_R1_001.fastq.gz}")
-        	AdapterRemoval --identify-adapters --file1 "\${file}"  --file2 $data/"\${name}_R2_001.fastq.gz" > adapters/"\$name"_Adapters.txt
+        	name=\$(basename "\${file%_1.fastq.gz}")
+        	AdapterRemoval --identify-adapters --file1 "\${file}"  --file2 $data/"\${name}_2.fastq.gz" > adapters/"\$name"_Adapters.txt
           	awk -F':' '/adapter1/ {print \$2}' adapters/"\${name}"_Adapters.txt > adapters/"\${name}"_adapter1.txt
           	awk -F':' '/adapter2/ {print \$2}' adapters/"\${name}"_Adapters.txt > adapters/"\${name}"_adapter2.txt
           	adapter1cat=\$(cat adapters/"\${name}"_adapter1.txt | tr -d '[:space:]')
@@ -65,7 +62,7 @@ process ADAPTOR_REMOVAL {
           	--trimns \
           	--trimqualities \
           	--file1 "\${file}" \
-          	--file2 $data/"\${name}_R2_001.fastq.gz" \
+          	--file2 $data/"\${name}_2.fastq.gz" \
           	--basename  "\${name}_adapterRemovalOutput"
 
 		
@@ -106,7 +103,7 @@ process ADAPTOR_REMOVAL {
 
   	if [[ $type == PAIRED ]]; then
 	  	export -f findAndRemovePaired
-	  	find $data/* -name "*R1_001.fastq.gz" | parallel -j $parallel findAndRemovePaired  
+	  	find $data/* -name "*_1.fastq.gz" | parallel -j $parallel findAndRemovePaired  
   	else
     		export -f findAndRemoveSingle
     		find $data/* -name "*.fastq.gz" | parallel -j $parallel findAndRemoveSingle
