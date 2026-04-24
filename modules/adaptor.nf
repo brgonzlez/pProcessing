@@ -112,6 +112,5 @@ process ADAPTOR_REMOVAL {
 	cat .command.log > adapters.log
 	
 	cp adapters.log "${params.output}/LOG/
-	cp collapsed/* "${params.output}/FASTQ/
 	"""
 }
