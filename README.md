@@ -10,4 +10,4 @@ First you need to have `nextflow` and `conda/mamba` installed. Please visit: htt
 Then you can clone this repository:
 
 
-`$ git clone https://github.com/mudymudy/pProcessing`
+`$ git clone https://github.com/brgonzlez/pProcessing`
