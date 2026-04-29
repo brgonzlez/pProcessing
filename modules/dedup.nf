@@ -40,7 +40,7 @@ process DEDUPLICATION {
 
 	rm *bad_out.fastq
 
-	rename_and_compress()
+	rename_and_compress() {
 	sample=\$1
 
 		name=\$(basename "\${sample%_good_out.fastq}.fastq")
